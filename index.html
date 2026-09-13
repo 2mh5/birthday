@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="مفاجأة صغيرة">
+<meta name="theme-color" content="#f5eee4">
+<link rel="apple-touch-icon" href="images/flower.png">
+<title>Happy Birthday</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Tajawal',Arial,sans-serif;background:#f5eee4;color:#4b3528;overflow-x:hidden}
+img{max-width:100%}
+button,input{font-family:'Tajawal',Arial,sans-serif}
+
+#musicDisc{position:fixed;right:15px;bottom:18px;width:58px;height:58px;z-index:9999;cursor:pointer;animation:rotateMusic 5s linear infinite;animation-play-state:paused}
+#musicDisc.playing{animation-play-state:running}
+#musicDisc img{width:100%;height:100%;object-fit:contain;display:block;background:transparent}
+#musicDisc.paused::after{content:"▶";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:white;font-size:14px;text-shadow:0 1px 4px rgba(0,0,0,.5)}
+@keyframes rotateMusic{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+#loginScreen{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px;background:radial-gradient(circle at top,#fffaf3,#e7d5c0)}
+.loginBox{width:100%;max-width:380px;padding:35px 25px;text-align:center;background:#fffaf4;border-radius:25px;box-shadow:0 15px 50px rgba(70,45,30,.15)}
+.loginBox img{width:120px;height:120px;object-fit:contain;margin-bottom:15px}
+.loginBox h1{font-family:'Amiri',Georgia,serif;font-size:32px;margin-bottom:10px;line-height:1.4}
+.loginBox p{color:#806b5d;font-size:14px;margin-bottom:25px;line-height:1.8}
+#password{width:100%;padding:14px;border:1px solid #d8c4b0;border-radius:13px;background:white;text-align:center;font-size:18px;letter-spacing:6px;outline:none}
+#enterButton{width:100%;padding:14px;margin-top:12px;border:none;border-radius:13px;background:#71513d;color:white;font-size:15px;cursor:pointer}
+#enterButton:active{transform:scale(.98)}
+#hintButton{margin-top:10px;padding:7px 16px;border:none;background:transparent;color:#96765d;font-size:13px;cursor:pointer}
+#hintNote{display:none;margin-top:5px;padding:10px 14px;background:#f5eee4;border:1px solid #dfcdb9;border-radius:12px;color:#806b5d;font-size:12px;line-height:1.8;text-align:center}
+#hintNote.show{display:block}
+#error{display:none;margin-top:12px;color:#a3483c;font-size:13px}
+
+#website{display:none}
+.main{min-height:100vh;padding:40px 15px 100px;display:flex;justify-content:center;align-items:flex-start}
+.card{width:100%;max-width:600px;background:#fffaf4;padding:12px;border-radius:22px;box-shadow:0 15px 40px rgba(70,45,30,.10)}
+.cardImage{width:100%;height:auto;display:block;object-fit:contain;border-radius:15px;margin-bottom:20px}
+.cardContent{padding:5px 12px 20px;text-align:center}
+.card h2{font-family:'Amiri',Georgia,serif;font-size:clamp(30px,8vw,45px);line-height:1.4;margin-bottom:15px}
+.card p{color:#806d5f;font-size:15px;line-height:2;text-align:right}
+
+@media(max-width:700px){
+.main{padding:30px 15px 90px}
+#musicDisc{width:55px;height:55px;right:12px;bottom:15px}
+}
+@media(max-width:360px){
+#musicDisc{width:48px;height:48px}
+.loginBox{padding:30px 20px}
+.main{padding-left:10px;padding-right:10px}
+}
+</style>
+</head>
+
+<body>
+
+<audio id="music" loop>
+<source src="music/song.mp3" type="audio/mpeg">
+</audio>
+
+<div id="musicDisc" class="paused" onclick="toggleMusic()">
+<img src="images/music-disc.png" alt="Music">
+</div>
+
+<div id="loginScreen">
+<div class="loginBox">
+
+<img src="images/flower.png" alt="Flower">
+
+<h1>مفاجأة صغيرة</h1>
+
+<p>كلمة السر تاريخ يوم مميز</p>
+
+<input id="password" type="password" inputmode="numeric" maxlength="4" placeholder="••••">
+
+<button id="enterButton" onclick="enterWebsite()">⎆ دخول</button>
+
+<button id="hintButton" onclick="toggleHint()">⌕ تلميح</button>
+
+<div id="hintNote">
+الشهور الفردية تكتب بوضع صفر قبل الشهر<br>
+مثل 01 02 03 إلخ
+</div>
+
+<div id="error">خطأ حاول مرة ثانية</div>
+
+</div>
+</div>
+
+<div id="website">
+
+<main class="main">
+
+<div class="card">
+
+<img class="cardImage" src="images/main.png" alt="Main">
+
+<div class="cardContent">
+
+<h2>كل عام وأنت تضل أغلى وأحن ما عرفت</h2>
+
+<p>
+ما بعرف أعبر لكن حاولت إني أعايدك هالمرة بطريقة جديدة أتمنى تكون هالسنة من أجمل السنين الي تمر عليك وتحقق فيها كل ما تتمنى وبإذن الله بنضل دايما بجنب بعض ما بيفرقنا شي وما بكذب بيوم لما بقول عنك من أحن الأشخاص إلي عرفتهم بحياتي شكرا على كل مرة وقفت معي فيها بالسنة هي 🤎
+</p>
+
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+<script>
+const CORRECT_PASSWORD="1409";
+
+const loginScreen=document.getElementById("loginScreen");
+const website=document.getElementById("website");
+const password=document.getElementById("password");
+const error=document.getElementById("error");
+const hintNote=document.getElementById("hintNote");
+const music=document.getElementById("music");
+const musicDisc=document.getElementById("musicDisc");
+
+function enterWebsite(){
+if(password.value===CORRECT_PASSWORD){
+loginScreen.style.display="none";
+website.style.display="block";
+music.volume=0.03;
+music.play().then(function(){
+musicDisc.classList.add("playing");
+musicDisc.classList.remove("paused");
+}).catch(function(){
+musicDisc.classList.remove("playing");
+musicDisc.classList.add("paused");
+});
+}else{
+error.style.display="block";
+password.value="";
+password.focus();
+}
+}
+
+password.addEventListener("keydown",function(event){
+if(event.key==="Enter") enterWebsite();
+});
+
+function toggleHint(){
+hintNote.classList.toggle("show");
+}
+
+function toggleMusic(){
+if(music.paused){
+music.play().then(function(){
+musicDisc.classList.add("playing");
+musicDisc.classList.remove("paused");
+});
+}else{
+music.pause();
+musicDisc.classList.remove("playing");
+musicDisc.classList.add("paused");
+}
+}
+
+music.addEventListener("play",function(){
+musicDisc.classList.add("playing");
+musicDisc.classList.remove("paused");
+});
+
+music.addEventListener("pause",function(){
+musicDisc.classList.remove("playing");
+musicDisc.classList.add("paused");
+});
+</script>
+
+</body>
+</html>
